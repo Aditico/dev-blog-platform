@@ -1,3 +1,11 @@
+require("dotenv").config();
+// console.log("TOP ENV:", process.env.CLOUDINARY_CLOUD_NAME);
+
+const commentRoutes = require("./routes/commentRoutes");
+const uploadRoutes = require("./routes/uploadRoutes");
+const userRoutes = require("./routes/userRoutes");
+const postRoutes = require("./routes/postRoutes");
+const authRoutes = require("./routes/authRoutes");
 const User = require("./models/User");
 const Post = require("./models/Post");
 
@@ -16,11 +24,21 @@ const app = express();
 
 
 // Middleware
-app.use(cors());
+// app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 
-
+app.use("/api/comments", commentRoutes);
+app.use("/api/upload", uploadRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/posts", postRoutes);
+app.use("/api/auth", authRoutes);
 // Root Route
 app.get("/", (req, res) => {
   res.status(200).json({
