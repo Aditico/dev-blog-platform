@@ -20,7 +20,12 @@ function App() {
   return (
     <BrowserRouter>
       <AuthLoader />
-      <Toaster position="top-right" />
+      <Toaster
+    position="top-right"
+    toastOptions={{
+      duration: 3000,
+    }}
+  />
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
