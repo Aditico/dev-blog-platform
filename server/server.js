@@ -25,14 +25,35 @@ app.set("trust proxy", 1);
 
 // Middleware
 // app.use(cors());
+// app.use(
+//   cors({
+//     // origin: "http://localhost:5173",
+//     // origin: [
+//     //   "http://localhost:5173",
+//     //   process.env.CLIENT_URL,
+//     // ],
+//         origin: process.env.CLIENT_URL,
+//     credentials: true,
+//   })
+// );
+const allowedOrigins = [
+  "https://dev-blog-platform.vercel.app",
+  /https:\/\/dev-blog-platform-.*\.vercel\.app$/,  // allows all preview URLs
+];
+
 app.use(
   cors({
-    // origin: "http://localhost:5173",
-    // origin: [
-    //   "http://localhost:5173",
-    //   process.env.CLIENT_URL,
-    // ],
-        origin: process.env.CLIENT_URL,
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true); // allow server-to-server
+      const allowed = allowedOrigins.some((o) =>
+        typeof o === "string" ? o === origin : o.test(origin)
+      );
+      if (allowed) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS: " + origin));
+      }
+    },
     credentials: true,
   })
 );
