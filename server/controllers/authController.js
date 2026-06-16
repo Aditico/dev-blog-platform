@@ -54,6 +54,8 @@ res.cookie("token", token, {
         name: user.name,
         email: user.email,
         bio: user.bio,
+          avatar: user.avatar,   // add this
+
       },
     });
   } catch (error) {
@@ -113,6 +115,7 @@ res.cookie("token", token, {
         name: user.name,
         email: user.email,
         bio: user.bio,
+        avatar: user.avatar,
       },
     });
   } catch (error) {
