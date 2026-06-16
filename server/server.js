@@ -30,8 +30,7 @@ app.use(
     // origin: "http://localhost:5173",
     origin: [
       "http://localhost:5173",
-
-      "https://dev-blog-platform-97iaon1qj-aditimaurya1217-7846s-projects.vercel.app",
+      process.env.CLIENT_URL,
     ],
     credentials: true,
   })
