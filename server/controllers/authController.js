@@ -29,10 +29,16 @@ const registerUser = async (req, res) => {
     const token = generateToken(user._id);
 
     // Store JWT in cookie
+    // res.cookie("token", token, {
+    //   httpOnly: true,
+    //   maxAge: 7 * 24 * 60 * 60 * 1000,
+    // });res.cookie("token", token, {
     res.cookie("token", token, {
-      httpOnly: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+  maxAge: 7 * 24 * 60 * 60 * 1000,
+});
 
     res.status(201).json({
       success: true,
@@ -79,11 +85,14 @@ const loginUser = async (req, res) => {
 
     const token = generateToken(user._id);
 
+    // res.cookie("token", token, {
+    //   httpOnly: true,
+    //   maxAge: 7 * 24 * 60 * 60 * 1000,
+    // });
     res.cookie("token", token, {
-      httpOnly: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
-
+  httpOnly: true,
+  maxAge: 7 * 24 * 60 * 60 * 1000,
+});
     res.status(200).json({
       success: true,
       message: "Login successful",
@@ -106,10 +115,16 @@ const loginUser = async (req, res) => {
 // Logout User
 const logoutUser = async (req, res) => {
   try {
+    // res.cookie("token", "", {
+    //   httpOnly: true,
+    //   expires: new Date(0),
+    // });
     res.cookie("token", "", {
-      httpOnly: true,
-      expires: new Date(0),
-    });
+  httpOnly: true,
+  secure: true,
+  sameSite: "none",
+  expires: new Date(0),
+});
 
     res.status(200).json({
       success: true,
